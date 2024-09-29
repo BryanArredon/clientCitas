@@ -1,98 +1,106 @@
-
-
 <div class="background-image"></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
-    <h5 href="/home" class="active">Citas Mendicas</h5>
+    <h5 href="/home" class="active">Citas psicológicas</h5>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/registro-cita-pedagogiaU" routerLinkActive="active">Registro de Citas Pedadogia</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/horariosU" routerLinkActive="active">Horarios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/historialU" routerLinkActive="active">Historial</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/recordatoriosU" routerLinkActive="active">Recordatorios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/configuracion-usuarioU" routerLinkActive="active">Configuración del Usuario</a>
-            </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/registro-cita-pedagogiaU" routerLinkActive="active">Registro de Citas Pedagogía</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/horariosU" routerLinkActive="active">Horarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/historialU" routerLinkActive="active">Historial</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/recordatoriosU" routerLinkActive="active">Recordatorios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/configuracion-usuarioU" routerLinkActive="active">Configuración del Usuario</a>
+        </li>
       </ul>
       <form class="d-flex">
-        <button class="btn btn-outline-primary me-2" type="button" routerLink="/home">Cerrar sesion</button>
+        <button class="btn btn-outline-primary me-2" type="button" routerLink="/home">Cerrar sesión</button>
       </form>
     </div>
   </div>
 </nav>
 
-
 <div class="container mt-4">
-    <!-- Tarjeta para el formulario -->
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-title">Registrar Cita</h5>
-      </div>
-      <div class="card-body">
-        <form [formGroup]="registroCitaForm" (ngSubmit)="onSubmit()">
-          <div class="form-group row">
-            <label for="nombre" class="col-sm-2 col-form-label">Nombre:</label>
-            <div class="col-sm-10">
-              <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="Ingrese su nombre" />
-              <div class="text-danger" *ngIf="registroCitaForm.get('nombre')?.invalid && registroCitaForm.get('nombre')?.touched">
-                El nombre es requerido.
-              </div>
-            </div>
-          </div>
-  
-          <div class="form-group row mt-3">
-            <label for="email" class="col-sm-2 col-form-label">Email:</label>
-            <div class="col-sm-10">
-              <input id="email" formControlName="email" type="email" class="form-control" placeholder="Ingrese su email" />
-              <div class="text-danger" *ngIf="registroCitaForm.get('email')?.invalid && registroCitaForm.get('email')?.touched">
-                El email es requerido.
-              </div>
-            </div>
-          </div>
-  
-          <div class="form-group row mt-3">
-            <label for="telefono" class="col-sm-2 col-form-label">Teléfono:</label>
-            <div class="col-sm-10">
-              <input id="telefono" formControlName="telefono" type="text" class="form-control" placeholder="Ingrese su teléfono" />
-              <div class="text-danger" *ngIf="registroCitaForm.get('telefono')?.invalid && registroCitaForm.get('telefono')?.touched">
-                El teléfono es requerido.
-              </div>
-            </div>
-          </div>
-  
-          <div class="form-group row mt-3">
-            <label for="dia" class="col-sm-2 col-form-label">Día:</label>
-            <div class="col-sm-10">
-              <input id="dia" formControlName="dia" type="date" class="form-control" />
-              <div class="text-danger" *ngIf="registroCitaForm.get('dia')?.invalid && registroCitaForm.get('dia')?.touched">
-                La fecha es requerida.
-              </div>
-            </div>
-          </div>
-  
-  
-          <div class="form-group row mt-4">
-            <div class="col-sm-10 offset-sm-2">
-              <button type="submit" class="btn btn-primary" [disabled]="registroCitaForm.invalid">
-                {{ currentItem.id ? 'Actualizar' : 'Guardar' }}
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+  <!-- Tarjeta para el formulario -->
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Registrar Cita</h5>
     </div>
-<!--    -->
+    <div class="card-body">
+      <form [formGroup]="registroCitaForm" (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+          <label for="nombre" class="col-sm-2 col-form-label">Nombre:</label>
+          <div class="col-sm-10">
+            <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="Ingrese su nombre" />
+            <div class="text-danger" *ngIf="registroCitaForm.get('nombre')?.invalid && registroCitaForm.get('nombre')?.touched">
+              El nombre es requerido.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row mt-3">
+          <label for="email" class="col-sm-2 col-form-label">Email:</label>
+          <div class="col-sm-10">
+            <input id="email" formControlName="email" type="email" class="form-control" placeholder="Ingrese su email" />
+            <div class="text-danger" *ngIf="registroCitaForm.get('email')?.invalid && registroCitaForm.get('email')?.touched">
+              El email es requerido.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row mt-3">
+          <label for="telefono" class="col-sm-2 col-form-label">Teléfono:</label>
+          <div class="col-sm-10">
+            <input id="telefono" formControlName="telefono" type="text" class="form-control" placeholder="Ingrese su teléfono" />
+            <div class="text-danger" *ngIf="registroCitaForm.get('telefono')?.invalid && registroCitaForm.get('telefono')?.touched">
+              El teléfono es requerido.
+            </div>
+          </div>
+        </div>
+
+        <!-- Opción de Día -->
+        <div class="form-group row mt-3">
+          <label for="dia" class="col-sm-2 col-form-label">Día:</label>
+          <div class="col-sm-10">
+            <input id="dia" formControlName="dia" type="date" class="form-control" />
+            <div class="text-danger" *ngIf="registroCitaForm.get('dia')?.invalid && registroCitaForm.get('dia')?.touched">
+              El día es requerido.
+            </div>
+          </div>
+        </div>
+
+        <!-- Opción de Horario -->
+        <div class="form-group row mt-3">
+          <label for="horario" class="col-sm-2 col-form-label">Horario:</label>
+          <div class="col-sm-10">
+            <input id="horario" formControlName="horario" type="time" class="form-control" />
+            <div class="text-danger" *ngIf="registroCitaForm.get('horario')?.invalid && registroCitaForm.get('horario')?.touched">
+              El horario es requerido.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row mt-4">
+          <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary" [disabled]="registroCitaForm.invalid">
+              {{ currentItem.id ? 'Actualizar' : 'Guardar' }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
+</div>
+
   
