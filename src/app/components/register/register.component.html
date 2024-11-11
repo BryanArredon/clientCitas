@@ -1,81 +1,72 @@
 <div class="background-image"></div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container-fluid">
-        <h5 href="/home" class="active">Citas Psicólogicas</h5>
+  <div class="container-fluid">
+    <h5 class="active">Citas psicológicas</h5>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      <form class="d-flex">
+        <button class="btn btn-outline-primary me-2" type="button" routerLink="/login">Iniciar Sesión</button>
+      </form>
+    </div>
+  </div>
+</nav>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-          <!-- <li class="nav-item">
-            <a class="nav-link" routerLink="/registro-cita-pedagogia" routerLinkActive="active">Registro de Citas Pedadogia</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/horarios" routerLinkActive="active">Horarios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/historial" routerLinkActive="active">Historial</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/recordatorios" routerLinkActive="active">Recordatorios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/configuracion-usuario" routerLinkActive="active">Configuración del Usuario</a>
-          </li> -->
-        </ul>
-        <form class="d-flex">
-          <button class="btn btn-outline-primary me-2" type="button" routerLink="/login">Inciar Secion</button>
-        </form>
+<div class="content">
+  <br>
+  <div class="modal-body">
+    <div class="container">
+      <br>
+      <div class="card mx-auto" style="max-width: 600px;">
+        <div class="modal-header">
+          <h4 class="modal-title">Registrar Usuario</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" formControlName="nombre" class="form-control form-control-sm" />
+              <div *ngIf="formControls['nombre'].invalid && formControls['nombre'].touched" class="text-danger">
+                El nombre es obligatorio.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+              <input id="fecha_nacimiento" formControlName="fecha_nacimiento" type="date" class="form-control form-control-sm" />
+              <div *ngIf="formControls['fecha_nacimiento'].invalid && formControls['fecha_nacimiento'].touched" class="text-danger">
+                La fecha de nacimiento es obligatoria.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input id="telefono" formControlName="telefono" type="tel" class="form-control form-control-sm" />
+              <div *ngIf="formControls['telefono'].invalid && formControls['telefono'].touched" class="text-danger">
+                Debe ser un número de teléfono válido (10 dígitos).
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Correo</label>
+              <input id="email" formControlName="email" type="email" class="form-control form-control-sm" />
+              <div *ngIf="formControls['email'].invalid && formControls['email'].touched" class="text-danger">
+                Ingresa un correo válido.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Contraseña</label>
+              <input id="password" formControlName="password" type="password" class="form-control form-control-sm" />
+              <div *ngIf="formControls['password'].invalid && formControls['password'].touched" class="text-danger">
+                La contraseña debe tener al menos 6 caracteres.
+              </div>
+            </div>            
+            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+          </form>
+        </div>
       </div>
     </div>
-  </nav>
-  <div class="content">
-   
-  <br>
-  <div class="content">
-  
-  
-    <div class="modal-body">
-      <div class="container">
-        <br>
-        <!-- Tarjeta centrada para el formulario de usuario -->
-        <div class="card mx-auto" style="max-width: 600px;">
-            <div class="modal-header">
-                <h4 class="modal-title">Registrar Usuario</h4>
-              </div>
-          <div class="card-body">
-            <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
-              <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input id="nombre" formControlName="nombre" class="form-control form-control-sm" />
-              </div>
-              <div class="form-group">
-                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-                <input id="fecha_nacimiento" formControlName="fecha_nacimiento" type="date" class="form-control form-control-sm" />
-              </div>
-              <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input id="telefono" formControlName="telefono" type="tel" class="form-control form-control-sm" />
-              </div>
-              <div class="form-group">
-                <label for="email">Correo</label>
-                <input id="email" formControlName="email" type="email" class="form-control form-control-sm" />
-              </div>
-              <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input id="password" formControlName="password" type="password" class="form-control form-control-sm" />
-              </div>
-              <!-- Campo oculto para rol, oculto con display: none -->
-              <div class="form-group" style="display: none;">
-                <label for="rol">Rol</label>
-                <select id="rol" formControlName="rol" class="form-control form-control-sm">
-                  <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
-                </select>
-              </div>
-              <!-- Botón para agregar el usuario -->
-              <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-            </form>
-          </div>
-        </div>
+  </div>
+</div>
+
+
