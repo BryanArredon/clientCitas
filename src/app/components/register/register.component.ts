@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
 import { ServicioGeneralService } from 'src/app/Service/servicio-general.service';
 import { Usuario } from 'src/app/models/modelos';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,114 +12,71 @@ import { Usuario } from 'src/app/models/modelos';
   styleUrls: ['./register.component.css'],
   providers: [NgbActiveModal]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   userForm: FormGroup;
-  users: Usuario[] = [];
-  roles: string[] = ['user']; // Solo rol de usuario para este componente
-  currentItem: Usuario | null = null;
-  isAdmin: boolean = false; // Controlar si es admin o no
 
   constructor(
-    private toastr: ToastrService,
     private fb: FormBuilder,
     private userService: ServicioGeneralService,
+    private router: Router, // Agregar el Router
     public modal: NgbActiveModal
   ) {
     this.userForm = this.fb.group({
       nombre: ['', Validators.required],
       fecha_nacimiento: ['', Validators.required],
-      telefono: ['', Validators.required],
+      telefono: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      rol: [this.roles[0]] // Establece el primer rol como valor predeterminado
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  ngOnInit(): void {
-    this.checkUserRole(); // Verifica si el usuario es admin
-    if (this.isAdmin) {
-      this.getUsers();
-    }
-  }
+  ngOnInit(): void {}
 
-  checkUserRole() {
-    // Lógica para verificar el rol del usuario, por ejemplo, desde el servicio de autenticación
-    // Aquí se establece que es admin o no
-    // Esto debería ser reemplazado con la lógica real para determinar el rol del usuario
-    this.isAdmin = false; // Ajusta esto según la lógica de tu aplicación
-  }
-
-  getUsers() {
-    this.userService.getuser().subscribe(
-      (res: Usuario[]) => {
-        this.users = res;
-      },
-      err => console.error(err)
-    );
+  get formControls() {
+    return this.userForm.controls;
   }
 
   onSubmit() {
+    // Marcar todos los campos como tocados para que se muestren los errores
+    this.userForm.markAllAsTouched();
+  
+    // Si el formulario es inválido, no se envía
     if (this.userForm.invalid) {
       return;
     }
-
+  
     const userData: Usuario = this.userForm.value;
-
+  
     this.userService.saveuser(userData).subscribe(
       () => {
-        this.toastr.success('¡Éxito! El usuario ha sido añadido.');
+        // Mensaje de éxito utilizando Swal.fire
+        Swal.fire({
+          icon: 'success',
+          title: '¡Registro Exitoso!',
+          text: `El usuario ${userData.nombre} ha sido registrado correctamente.`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirigir al login
+            this.router.navigate(['/login']);
+          }
+        });
+        
         this.close();
-        if (this.isAdmin) {
-          this.getUsers();
-        }
         this.userForm.reset();
       },
       error => {
-        this.toastr.error('Hubo un problema al añadir el usuario.');
+        // Mensaje de error utilizando Swal.fire
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al añadir el usuario. Por favor, inténtalo de nuevo.',
+        });
         console.error('Error adding user:', error);
       }
     );
   }
-
+  
   close() {
     this.modal.dismiss();
-  }
-
-  deleteItem(id: number): void {
-    if (!this.isAdmin) return; // Solo permitir eliminación si es admin
-    this.userService.deleteuser(id).subscribe(
-      () => {
-        this.toastr.success('¡Éxito! El usuario ha sido eliminado.');
-        this.getUsers();
-      },
-      error => {
-        this.toastr.error('Hubo un problema al eliminar el usuario.');
-        console.error('Error deleting user:', error);
-      }
-    );
-  }
-
-  updateItem(item: Usuario): void {
-    if (!this.isAdmin) return; // Solo permitir actualización si es admin
-    this.currentItem = item;
-    this.userForm.patchValue(item);
-  }
-
-  updateCurrentItem(): void {
-    if (!this.isAdmin || !this.currentItem) return; // Solo permitir actualización si es admin
-    const updatedData: Usuario = this.userForm.value;
-    this.userService.upuser(this.currentItem.id, updatedData).subscribe(
-      () => {
-        this.toastr.success('¡Éxito! El usuario ha sido actualizado.');
-        this.close();
-        this.getUsers();
-        this.userForm.reset();
-        this.currentItem = null;
-      },
-      error => {
-        this.toastr.error('Hubo un problema al actualizar el usuario.');
-        console.error('Error updating user:', error);
-      }
-    );
   }
 }
